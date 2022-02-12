@@ -54,7 +54,7 @@ func GetSecrets(ctx context.Context, clientSet kubernetes.Interface, namespace, 
 func WriteTerminateMessage(message string) {
 	terminationMessagePath := "/dev/termination-log"
 	if runtime.GOOS == "windows" {
-		terminationMessagePath = "C:/dev/termination-log"
+		terminationMessagePath = "C:/termination-log"
 	}
 	err := ioutil.WriteFile(terminationMessagePath, []byte(message), 0o600)
 	if err != nil {
