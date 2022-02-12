@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"runtime"
 	"strconv"
 	"strings"
 
@@ -51,7 +52,11 @@ func GetSecrets(ctx context.Context, clientSet kubernetes.Interface, namespace, 
 
 // Write the Terminate message in pod spec
 func WriteTerminateMessage(message string) {
-	err := ioutil.WriteFile("/dev/termination-log", []byte(message), 0o600)
+	terminationMessagePath := "/dev/termination-log"
+	if runtime.GOOS == "windows" {
+		terminationMessagePath = "C:/dev/termination-log"
+	}
+	err := ioutil.WriteFile(terminationMessagePath, []byte(message), 0o600)
 	if err != nil {
 		panic(err)
 	}
