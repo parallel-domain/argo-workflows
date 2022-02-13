@@ -1033,11 +1033,12 @@ func (we *WorkflowExecutor) monitorDeadline(ctx context.Context, containerNames 
 }
 
 func (we *WorkflowExecutor) killContainers(ctx context.Context, containerNames []string) {
-	log.Infof("Killing containers")
+	log.Infof("Killing containers %v", containerNames)
 	terminationGracePeriodDuration, _ := we.GetTerminationGracePeriodDuration(ctx)
 	if err := we.RuntimeExecutor.Kill(ctx, containerNames, terminationGracePeriodDuration); err != nil {
 		log.Warnf("Failed to kill %q: %v", containerNames, err)
 	}
+	log.Infof("Done killing containers")
 }
 
 // KillSidecars kills any sidecars to the main container
