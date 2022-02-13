@@ -42,6 +42,9 @@ COPY --from=builder C:/ProgramData/chocolatey/lib/7zip.portable/tools/7z-extra/x
 # add binaries to path
 RUN SETX /m path C:\app;C:\app\git\bin;%path%
 
+RUN reg add hklm\system\currentcontrolset\services\cexecsvc /v ProcessShutdownTimeoutSeconds /t REG_DWORD /d 60 /f && \
+  reg add hklm\system\currentcontrolset\control /v WaitToKillServiceTimeout /t REG_SZ /d 60000 /f
+
 ####################################################################################################
 # Argo Build stage which performs the actual build of Argo binaries
 ####################################################################################################
